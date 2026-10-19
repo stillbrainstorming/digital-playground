@@ -1,30 +1,527 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#10101b"><meta name="description" content="A playful collection of quick browser games. Play reaction, target and memory challenges.">
-<title>DigiTapli — Play a little</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no"/>
+<title>Digital Tapli — Playful Stress Relief</title>
+<meta name="description" content="Swipe to give taplis! A playful stress-relief game. How many can you give?"/>
+<meta property="og:title" content="Digital Tapli"/>
+<meta property="og:description" content="Swipe to give taplis! How many can YOU give?"/>
+<meta property="og:type" content="website"/>
+<meta name="theme-color" content="#1f4fa3">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Digital Tapli">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
 <style>
-:root{color-scheme:dark;--bg:#10101b;--panel:#191927;--panel2:#222235;--ink:#f7f5ff;--muted:#a5a4bd;--pink:#ff638b;--violet:#9b8cff;--lime:#c7f36b;--line:#34334a}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 75% -15%,#3c2857 0,transparent 38%),var(--bg);color:var(--ink);font:16px/1.5 Inter,ui-sans-serif,system-ui,sans-serif}button{font:inherit;cursor:pointer}button:focus-visible{outline:3px solid var(--lime);outline-offset:3px}.wrap{max-width:1120px;margin:auto;padding:24px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px}.brand{display:flex;align-items:center;gap:10px;font-weight:850;letter-spacing:-.04em}.logo{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--pink),var(--violet));color:#141322;font-size:22px}.pill,.quiet{border:1px solid var(--line);border-radius:999px;background:#ffffff08;color:var(--ink);padding:9px 14px}.hero{padding:72px 0 38px;max-width:760px}.eyebrow{color:var(--lime);font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.hero h1{font-size:clamp(42px,7vw,76px);line-height:.99;letter-spacing:-.065em;margin:15px 0}.hero h1 span{color:var(--pink)}.hero p{color:var(--muted);font-size:18px;max-width:580px}.stats{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}.stat{padding:10px 15px;border:1px solid var(--line);border-radius:14px;color:var(--muted);font-size:13px}.stat b{color:var(--ink);font-size:17px;margin-right:5px}.lobbytools{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:10px 0 18px}.filters{display:flex;gap:7px;flex-wrap:wrap}.filter{border:1px solid var(--line);border-radius:999px;background:#ffffff08;color:var(--muted);padding:8px 13px;font-size:13px}.filter.active{background:var(--lime);border-color:var(--lime);color:#171927;font-weight:850}.searchbox{min-width:min(100%,230px);background:var(--panel);border:1px solid var(--line);border-radius:12px;color:var(--ink);padding:10px 13px}.featured{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;margin:6px 0 28px}.featurecopy,.featurevisual{border:1px solid var(--line);border-radius:22px;padding:22px;background:linear-gradient(130deg,#26233e,#171725)}.featurecopy h2{font-size:clamp(25px,4vw,38px);line-height:1.05;letter-spacing:-.05em;margin:8px 0}.featurecopy p{color:var(--muted);max-width:440px}.featurevisual{display:flex;align-items:center;justify-content:center;gap:12px;background:radial-gradient(circle at 50% 45%,#51406f,#211d35 65%);font-size:clamp(28px,5vw,54px)}.game[hidden]{display:none}.sectionhead{display:flex;justify-content:space-between;align-items:end;margin:20px 0 14px;gap:16px}.sectionhead h2{font-size:25px;letter-spacing:-.04em;margin:0}.sectionhead p{color:var(--muted);margin:3px 0 0;font-size:13px}.games{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.game{border:1px solid var(--line);background:linear-gradient(160deg,#232238,var(--panel) 65%);border-radius:22px;padding:18px;min-height:228px;display:flex;flex-direction:column;transition:transform .18s,border-color .18s}.game:hover{transform:translateY(-3px);border-color:#77709c}.art{height:92px;border-radius:15px;display:grid;place-items:center;font-size:42px;margin-bottom:16px;background:radial-gradient(circle at 40% 30%,#ff9db6,#703d87)}.game:nth-child(2) .art{background:radial-gradient(circle at 40% 30%,#dcff9b,#32766a)}.game:nth-child(3) .art{background:radial-gradient(circle at 40% 30%,#b9adff,#41428b)}.tag{color:var(--lime);font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:800}.game h3{margin:5px 0;font-size:20px}.game p{color:var(--muted);font-size:13px;margin:0 0 16px}.launch{margin-top:auto;border:0;background:var(--ink);color:#191727;border-radius:12px;padding:11px;font-weight:800}.playzone{margin:28px 0;border:1px solid var(--line);border-radius:24px;background:var(--panel);padding:22px;display:none}.playzone.active{display:block}.playtop{display:flex;justify-content:space-between;gap:16px;align-items:center}.playtop h2{margin:0}.gamearea{min-height:210px;display:grid;place-items:center;text-align:center;padding:22px 0}.bigbtn{border:0;border-radius:22px;padding:28px 36px;background:var(--violet);color:#161528;font-weight:900;font-size:22px;min-width:220px;min-height:110px}.bigbtn.ready{background:var(--lime)}.bigbtn.wait{background:var(--pink)}.hint{color:var(--muted);font-size:14px}.tiles{display:grid;grid-template-columns:repeat(3,74px);gap:9px}.tile{height:70px;border:1px solid var(--line);background:var(--panel2);border-radius:14px}.tile.lit{background:var(--lime);box-shadow:0 0 25px #c7f36b55}.target-field{position:relative;width:min(100%,650px);height:220px;border-radius:18px;background:#11111c;border:1px solid var(--line);overflow:hidden}.target{position:absolute;border:0;border-radius:50%;width:48px;height:48px;background:var(--pink);color:#211226;font-size:20px;font-weight:900;box-shadow:0 0 0 7px #ff638b25}.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.controls select{background:var(--panel2);border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:9px}.footer{border-top:1px solid var(--line);margin-top:44px;padding:20px 0;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}dialog{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:20px;max-width:420px}dialog::backdrop{background:#05050bc9}.close{float:right}.notice{font-size:12px;color:var(--muted)}@media(max-width:760px){.featured{grid-template-columns:1fr}.featurevisual{min-height:95px}.wrap{padding:18px}.hero{padding:48px 0 26px}.games{grid-template-columns:1fr}.game{min-height:0}.art{height:76px}.top{align-items:flex-start}.games .game{display:grid;grid-template-columns:76px 1fr;column-gap:14px}.game .art{grid-row:span 4;margin:0;height:100%;min-height:120px}.game .launch{grid-column:2}.sectionhead{align-items:flex-start;flex-direction:column}.playzone{padding:16px}.tiles{grid-template-columns:repeat(3,64px)}.tile{height:60px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;scroll-behavior:auto!important}}
-</style></head>
-<body><div class="wrap">
-<header class="top"><div class="brand"><span class="logo">✳</span> DigiTapli</div><div class="controls"><button class="quiet" id="sound">♫ Sound: off</button><button class="pill" id="help">How to play ↗</button></div></header>
-<main><section class="hero"><div class="eyebrow">Tiny games. Big energy.</div><h1>A little play goes a <span>long way.</span></h1><p>Take a quick break with bite-sized challenges built for your browser. No downloads, no sign-up, just press play.</p><div class="stats"><div class="stat"><b id="played">0</b> rounds played</div><div class="stat"><b id="best">—</b> best reaction</div><div class="stat"><b>Guest</b> local profile</div></div></section><section class="featured"><div class="featurecopy"><div class="eyebrow">Featured · Quick play</div><h2>Pick up a challenge.<br>Beat your own best.</h2><p>Jump straight into a short round, build a streak, and keep your personal scores on this device.</p><button class="launch" data-game="reaction">Start quick play →</button></div><div class="featurevisual" aria-hidden="true"><span>⚡</span><span>◉</span><span>▦</span></div></section>
-<div class="sectionhead"><div><h2>Pick your challenge</h2><p>Three ways to reset your brain.</p></div><div class="controls"><label class="notice" for="difficulty">Difficulty</label><select id="difficulty"><option value="easy">Easy</option><option value="normal" selected>Normal</option><option value="hard">Hard</option></select></div></div>
-<div class="lobbytools"><div class="filters" aria-label="Filter games"><button class="filter active" data-filter="all">All games</button><button class="filter" data-filter="reflex">Reflex</button><button class="filter" data-filter="focus">Focus</button><button class="filter" data-filter="memory">Memory</button></div><input class="searchbox" id="gameSearch" type="search" placeholder="Find a game…" aria-label="Search games"></div><section class="games">
-<article class="game" data-category="reflex"><div class="art" aria-hidden="true">⚡</div><div><span class="tag">01 · Reflex</span><h3>Reaction Sprint</h3><p>Wait for green. Tap fast. Don't jump the gun.</p></div><button class="launch" data-game="reaction">Play reaction →</button></article>
-<article class="game" data-category="focus"><div class="art" aria-hidden="true">◉</div><div><span class="tag">02 · Focus</span><h3>Target Rush</h3><p>Catch every target before the timer runs out.</p></div><button class="launch" data-game="target">Play target rush →</button></article>
-<article class="game" data-category="memory"><div class="art" aria-hidden="true">▦</div><div><span class="tag">03 · Memory</span><h3>Memory Tiles</h3><p>Watch the pattern, then repeat it from memory.</p></div><button class="launch" data-game="memory">Play memory →</button></article>
-</section>
-<section class="playzone" id="playzone" aria-live="polite"><div class="playtop"><div><span class="tag" id="gameTag">CHALLENGE</span><h2 id="gameTitle">Ready?</h2></div><button class="quiet" id="closeGame">Close ×</button></div><div class="gamearea" id="gamearea"></div><div class="controls"><button class="pill" id="restart">Restart round ↻</button><span class="hint" id="gameStatus">Choose a game to begin.</span></div></section>
-</main><footer class="footer"><span>DigiTapli · Made for the joy of a quick challenge.</span><span>Original independent project · Static-site friendly</span></footer></div>
-<dialog id="helpDialog"><button class="quiet close" id="closeHelp">Close ×</button><h2>How to play</h2><p><b>Reaction Sprint</b> — start the round, wait for green, then tap. Early taps count as a false start.</p><p><b>Target Rush</b> — tap the moving target as often as you can before time runs out.</p><p><b>Memory Tiles</b> — remember the flashing sequence and repeat it.</p><p class="notice">Scores are saved only in this browser. No account is needed.</p></dialog>
+*,::before,::after{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#fff;overflow:hidden;overscroll-behavior:none;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
+#app{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+
+/* ── NAV TABS ── */
+#appTabs{display:flex;width:100%;max-width:480px;border-bottom:2px solid #e8edf7;background:#f0f4fc}
+.tab{flex:1;padding:10px 4px;font:700 clamp(13px,3.5vw,16px)/1 system-ui,sans-serif;text-align:center;cursor:pointer;text-decoration:none;transition:background .2s,color .2s;border:none;outline:none}
+.tab.on{background:#fff;color:#1f4fa3;border-bottom:3px solid #1f4fa3;margin-bottom:-2px}
+.tab.go{background:#12315f;color:#fff;display:flex;align-items:center;justify-content:center;gap:6px}
+.tab.go::after{content:'↗';font-size:.85em;opacity:.8}
+
+/* ── TITLE ── */
+#title{margin:0;padding:10px 12px 2px;font:800 clamp(26px,7vw,52px)/1.1 system-ui,-apple-system,sans-serif;color:#1f4fa3;letter-spacing:.5px;text-align:center}
+
+/* ── HINT ── */
+#hint{padding:2px 16px 6px;font:600 clamp(12px,3.2vw,15px) system-ui,sans-serif;color:#888;text-align:center;min-height:1.4em;letter-spacing:.2px}
+
+/* ── STAGE ── */
+#stage{position:relative;flex:1;min-height:0;width:100%;max-width:480px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+
+/* coach ring */
+#coach{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;pointer-events:none;z-index:5;opacity:1;transition:opacity .4s}
+#coach.hide{opacity:0}
+.ring{display:block;width:72px;height:72px;border-radius:50%;border:3px solid rgba(31,79,163,.5);animation:ringPulse 1.5s ease-out infinite}
+.lab{font:600 14px/1 system-ui,sans-serif;color:#1f4fa3;letter-spacing:.3px}
+@keyframes ringPulse{0%{transform:scale(1);opacity:1}70%{transform:scale(2);opacity:0}100%{transform:scale(2);opacity:0}}
+
+/* man wrapper */
+#manWrap{position:relative;width:min(60vw,240px);height:min(70vw,310px);transition:transform .08s cubic-bezier(.2,1.6,.4,1);transform-origin:bottom center}
+#manWrap.hit{animation:manHit .25s cubic-bezier(.2,1.6,.4,1)}
+#manWrap.breathe{animation:breathe 3s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scaleY(1) scaleX(1)}50%{transform:scaleY(1.018) scaleX(.985)}}
+@keyframes manHit{0%{transform:rotate(0deg) scaleX(1)}20%{transform:rotate(-8deg) scaleX(.9) translateX(-6px)}60%{transform:rotate(4deg) scaleX(1.05)}100%{transform:rotate(0deg) scaleX(1)}}
+
+/* ── COUNTERS ── */
+#counter{padding:6px 12px 8px;font:700 clamp(17px,4.5vw,26px) system-ui,-apple-system,sans-serif;color:#333;text-align:center}
+#counter b{display:inline-block;color:#d9531e;min-width:1.2em}
+#counter b.pop{animation:pop .35s cubic-bezier(.2,1.6,.4,1)}
+#globalCounter{padding:0 12px 8px;font:600 clamp(11px,3vw,14px) system-ui,-apple-system,sans-serif;color:#777;text-align:center}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.45)}100%{transform:scale(1)}}
+
+/* ── SHARE BUTTONS ── */
+#share{display:flex;gap:10px;padding:0 16px 10px;width:100%;max-width:420px}
+#share button{flex:1;padding:11px 8px;border:none;border-radius:10px;font:700 clamp(13px,3.5vw,15px)/1 system-ui,sans-serif;cursor:pointer;transition:opacity .15s,transform .1s;-webkit-tap-highlight-color:transparent}
+#share button:active{opacity:.8;transform:scale(.97)}
+#shareWa{background:#128c4a;color:#fff}
+#shareCopy{background:#eef3fb;color:#1f4fa3;border:1.5px solid #c3d3ef}
+
+/* ── DISCLAIMER ── */
+#disclaimer{padding:0 16px 10px;font:400 clamp(9px,2.5vw,11px)/1.45 system-ui,sans-serif;color:#aaa;text-align:center;max-width:420px}
+
+/* ── FX CANVAS (word pops) ── */
+#fx{position:fixed;inset:0;pointer-events:none;z-index:10}
+
+/* ── FLASH ── */
+#flash{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:9;transition:opacity .05s}
+#flash.bang{opacity:.55;transition:none}
+
+/* ── COMBO ── */
+#combo{position:fixed;right:14px;top:50%;transform:translateY(-50%);font:900 clamp(24px,8vw,48px)/1 system-ui,sans-serif;color:#d9531e;opacity:0;pointer-events:none;z-index:20;text-shadow:0 2px 8px rgba(217,83,30,.3);transition:opacity .3s}
+#combo.show{opacity:1}
+
+/* ── TOAST ── */
+#toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(20,20,40,.82);color:#fff;font:600 14px/1 system-ui,sans-serif;padding:10px 20px;border-radius:24px;opacity:0;pointer-events:none;z-index:30;white-space:nowrap;transition:opacity .25s}
+#toast.show{opacity:1}
+
+/* ── FLOATER ── */
+.floater{position:fixed;font:900 clamp(18px,5vw,26px)/1 system-ui,sans-serif;color:#d9531e;pointer-events:none;z-index:25;animation:floatUp .8s ease-out forwards}
+@keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-70px) scale(.7)}}
+
+/* ── WORD BURST ── */
+.burst{position:fixed;font:900 clamp(22px,6vw,34px)/1 system-ui,sans-serif;pointer-events:none;z-index:22;animation:burstAnim .65s ease-out forwards;white-space:nowrap}
+@keyframes burstAnim{0%{opacity:1;transform:scale(.5) rotate(-8deg)}30%{opacity:1;transform:scale(1.2) rotate(6deg)}100%{opacity:0;transform:scale(.8) rotate(-4deg) translateY(-20px)}}
+</style>
+</head>
+<body>
+<div id="app">
+  <nav id="appTabs" aria-label="Switch app">
+    <span class="tab on" aria-current="page">Digital Tapli</span>
+    <a class="tab go" href="https://digitiranga.com" target="_blank" rel="noopener">Digi Tiranga</a>
+  </nav>
+
+  <h1 id="title">Digital Tapli</h1>
+  <div id="hint">Keep tapping, keep smiling! 😄</div>
+
+  <div id="stage">
+    <!-- Coach / first-use hint -->
+    <div id="coach" aria-hidden="true">
+      <span class="ring"></span>
+      <span class="lab">← Swipe left to give taplis</span>
+    </div>
+
+    <!-- Cartoon Boss character SVG -->
+    <div id="manWrap" class="breathe">
+      <svg id="manSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 360" width="100%" height="100%" aria-label="Cartoon character" role="img">
+        <!-- Shadow -->
+        <ellipse cx="100" cy="352" rx="52" ry="8" fill="rgba(0,0,0,.12)"/>
+
+        <!-- Shoes -->
+        <ellipse cx="82" cy="346" rx="20" ry="8" fill="#1a1a2e" transform="rotate(-6,82,346)"/>
+        <ellipse cx="118" cy="346" rx="20" ry="8" fill="#1a1a2e" transform="rotate(6,118,346)"/>
+        <!-- Trousers -->
+        <rect x="74" y="265" width="22" height="82" rx="6" fill="#1e2d5a"/>
+        <rect x="104" y="265" width="22" height="82" rx="6" fill="#1e2d5a"/>
+        <!-- Suit jacket body -->
+        <path d="M55 200 Q48 240 52 280 L148 280 Q152 240 145 200 Q130 215 100 215 Q70 215 55 200Z" fill="#1e2d5a"/>
+        <!-- Shirt / inner -->
+        <path d="M88 215 L100 215 L112 215 L108 280 L92 280Z" fill="#f5f5f5"/>
+        <!-- Tie -->
+        <path d="M97 215 L103 215 L105 255 L100 265 L95 255Z" fill="#c0392b"/>
+        <path d="M99 213 L101 213 L103 215 L97 215Z" fill="#a93226"/>
+        <!-- Suit lapels -->
+        <path d="M100 215 L80 195 L55 200 Q70 215 100 215Z" fill="#253672"/>
+        <path d="M100 215 L120 195 L145 200 Q130 215 100 215Z" fill="#253672"/>
+        <!-- Left arm -->
+        <path d="M55 200 Q30 220 28 250 Q26 270 34 275 Q44 278 50 260 Q55 240 68 225Z" fill="#1e2d5a"/>
+        <!-- Left hand -->
+        <ellipse cx="33" cy="278" rx="10" ry="9" fill="#f4c494"/>
+        <!-- Right arm slightly raised -->
+        <path d="M145 200 Q168 215 172 245 Q175 268 167 272 Q157 276 152 258 Q147 240 133 220Z" fill="#1e2d5a"/>
+        <!-- Right hand -->
+        <ellipse cx="168" cy="275" rx="10" ry="9" fill="#f4c494"/>
+
+        <!-- Neck -->
+        <rect x="91" y="170" width="18" height="30" rx="5" fill="#f4c494"/>
+
+        <!-- Head -->
+        <ellipse cx="100" cy="148" rx="44" ry="50" fill="#f4c494"/>
+        <!-- Ear left -->
+        <ellipse cx="57" cy="148" rx="8" ry="12" fill="#e8b07a"/>
+        <!-- Ear right -->
+        <ellipse cx="143" cy="148" rx="8" ry="12" fill="#e8b07a"/>
+
+        <!-- Hair -->
+        <path d="M56 118 Q60 90 100 88 Q140 90 144 118 Q130 100 100 100 Q70 100 56 118Z" fill="#3a2a1a"/>
+        <path d="M56 118 Q50 130 57 145 Q58 125 70 112Z" fill="#3a2a1a"/>
+        <path d="M144 118 Q150 130 143 145 Q142 125 130 112Z" fill="#3a2a1a"/>
+
+        <!-- Forehead shine -->
+        <ellipse cx="100" cy="115" rx="20" ry="8" fill="rgba(255,255,255,.12)"/>
+
+        <!-- Eyebrows -->
+        <path d="M72 128 Q82 122 90 126" stroke="#3a2a1a" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M110 126 Q118 122 128 128" stroke="#3a2a1a" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+        <!-- Eyes -->
+        <ellipse cx="81" cy="137" rx="9" ry="10" fill="#fff"/>
+        <ellipse cx="119" cy="137" rx="9" ry="10" fill="#fff"/>
+        <ellipse cx="81" cy="138" rx="5.5" ry="6" fill="#3d2408"/>
+        <ellipse cx="119" cy="138" rx="5.5" ry="6" fill="#3d2408"/>
+        <!-- Pupils -->
+        <ellipse cx="79" cy="137" rx="2" ry="2.5" fill="#000"/>
+        <ellipse cx="117" cy="137" rx="2" ry="2.5" fill="#000"/>
+        <!-- Eye shine -->
+        <ellipse cx="83" cy="135" rx="1.5" ry="1.5" fill="#fff"/>
+        <ellipse cx="121" cy="135" rx="1.5" ry="1.5" fill="#fff"/>
+
+        <!-- Nose -->
+        <path d="M96 147 Q100 162 104 147" stroke="#c8845a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="93" cy="157" rx="5" ry="3.5" fill="rgba(0,0,0,.08)"/>
+        <ellipse cx="107" cy="157" rx="5" ry="3.5" fill="rgba(0,0,0,.08)"/>
+
+        <!-- Smile (smug grin) -->
+        <path d="M84 166 Q100 178 116 166" stroke="#b05a2a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M84 166 Q100 174 116 166 Q108 172 100 173 Q92 172 84 166Z" fill="rgba(0,0,0,.08)"/>
+
+        <!-- Moustache -->
+        <path d="M88 161 Q100 167 112 161 Q106 158 100 159 Q94 158 88 161Z" fill="#3a2a1a"/>
+
+        <!-- Spectacles -->
+        <circle cx="81" cy="137" r="13" fill="none" stroke="#2c1a08" stroke-width="2.2"/>
+        <circle cx="119" cy="137" r="13" fill="none" stroke="#2c1a08" stroke-width="2.2"/>
+        <line x1="94" y1="135" x2="106" y2="135" stroke="#2c1a08" stroke-width="2.2"/>
+        <line x1="57" y1="133" x2="68" y2="135" stroke="#2c1a08" stroke-width="2"/>
+        <line x1="132" y1="135" x2="143" y2="133" stroke="#2c1a08" stroke-width="2"/>
+
+        <!-- Pocket square -->
+        <path d="M62 220 L70 220 L69 228 L61 226Z" fill="#e74c3c"/>
+        <path d="M64 220 L67 215 L70 220Z" fill="#c0392b"/>
+
+        <!-- Fun badge -->
+        <rect x="110" y="230" width="30" height="18" rx="3" fill="#f5f5f5" stroke="#ccc" stroke-width="1"/>
+        <text x="125" y="244" text-anchor="middle" font-size="7" fill="#1f4fa3" font-family="system-ui,sans-serif" font-weight="800">TAPLI</text>
+
+        <!-- Cheek blush -->
+        <ellipse cx="68" cy="155" rx="9" ry="6" fill="rgba(230,120,80,.18)"/>
+        <ellipse cx="132" cy="155" rx="9" ry="6" fill="rgba(230,120,80,.18)"/>
+      </svg>
+    </div>
+  </div>
+
+  <div id="counter">Taplis given: <b id="count">0</b></div>
+  <div id="globalCounter">Total taplis worldwide: <b id="globalCount">4,726,451</b></div>
+
+  <div id="share">
+    <button id="shareWa" type="button">👋 WhatsApp</button>
+    <button id="shareCopy" type="button">🔗 Copy link</button>
+  </div>
+
+  <div id="disclaimer">This is a playful stress-relief game. Tapli is an affectionate, lighthearted head-pat in Indian culture. No real persons are depicted. Tap away your stress and have fun!</div>
+</div>
+
+<canvas id="fx"></canvas>
+<div id="flash"></div>
+<div id="combo"></div>
+<div id="toast"></div>
+
 <script>
-const $=s=>document.querySelector(s), zone=$('#playzone'),area=$('#gamearea');let mode='',timer=null,played=0,best=Number(localStorage.getItem('dp-best')||0),sound=false,round=0,seq=[],input=[],targetScore=0,started=0;
-$('#best').textContent=best?best+' ms':'—';$('#sound').onclick=()=>{sound=!sound;$('#sound').textContent='♫ Sound: '+(sound?'on':'off')};$('#help').onclick=()=>$('#helpDialog').showModal();$('#closeHelp').onclick=()=>$('#helpDialog').close();$('#closeGame').onclick=()=>{clearTimeout(timer);zone.classList.remove('active')};function tone(freq=550){if(!sound)return;try{const c=new AudioContext(),o=c.createOscillator(),g=c.createGain();o.frequency.value=freq;g.gain.value=.06;o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+.08)}catch{}}
-function start(name){clearTimeout(timer);mode=name;zone.classList.add('active');zone.scrollIntoView({behavior:'smooth',block:'start'});$('#gameTitle').textContent=({reaction:'Reaction Sprint',target:'Target Rush',memory:'Memory Tiles'})[name];$('#gameTag').textContent=({reaction:'REFLEX',target:'FOCUS',memory:'MEMORY'})[name];$('#gameStatus').textContent='';if(name==='reaction')reaction();if(name==='target')target();if(name==='memory')memory()}
-document.querySelectorAll('[data-game]').forEach(b=>b.onclick=()=>start(b.dataset.game));$('#restart').onclick=()=>start(mode);let activeFilter='all';function filterGames(){let q=$('#gameSearch').value.trim().toLowerCase();document.querySelectorAll('.game[data-category]').forEach(card=>{card.hidden=!(activeFilter==='all'||card.dataset.category===activeFilter)||!card.innerText.toLowerCase().includes(q)})}document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{activeFilter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));filterGames()});$('#gameSearch').addEventListener('input',filterGames);function finish(msg){played++;$('#played').textContent=played;$('#gameStatus').textContent=msg}
-function reaction(){area.innerHTML='<button class="bigbtn wait" id="reactBtn">Tap to begin</button><p class="hint">Stay ready. The signal can take a moment.</p>';let b=$('#reactBtn'),state='idle',delay; b.onclick=()=>{if(state==='idle'){state='waiting';b.textContent='Wait for green…';b.className='bigbtn wait';let d=$('#difficulty').value;delay=1200+Math.random()*({easy:1800,normal:3000,hard:4200}[d]);timer=setTimeout(()=>{state='go';started=performance.now();b.textContent='TAP NOW!';b.className='bigbtn ready';tone(880)},delay)}else if(state==='waiting'){clearTimeout(timer);state='done';b.textContent='False start! Try again';finish('Too early — wait for the green signal.')}else if(state==='go'){let ms=Math.round(performance.now()-started);state='done';b.textContent=ms+' ms · Again?';tone(660);if(!best||ms<best){best=ms;localStorage.setItem('dp-best',best);$('#best').textContent=best+' ms'}finish('Reaction time: '+ms+' ms.')}else reaction()}}
-function target(){targetScore=0;let seconds=$('#difficulty').value==='easy'?25:$('#difficulty').value==='hard'?12:18;area.innerHTML='<div><div class="hint" id="targetInfo">Score <b>0</b> · '+seconds+' seconds</div><div class="target-field" id="field"><button class="target" id="targetBtn" aria-label="Hit target">+</button></div></div>';let field=$('#field'),b=$('#targetBtn'),left=seconds;function move(){let x=Math.random()*(field.clientWidth-52),y=Math.random()*(field.clientHeight-52);b.style.left=x+'px';b.style.top=y+'px'}move();b.onclick=()=>{targetScore++;tone(500+targetScore*20);$('#targetInfo').innerHTML='Score <b>'+targetScore+'</b> · '+left+' seconds';move()};let tick=()=>{left--;$('#targetInfo').innerHTML='Score <b>'+targetScore+'</b> · '+left+' seconds';if(left<=0){b.disabled=true;finish('Time! You hit '+targetScore+' targets.');return}timer=setTimeout(tick,1000)};timer=setTimeout(tick,1000)}
-function memory(){seq=[];input=[];round=0;area.innerHTML='<div><p class="hint" id="memInfo">Watch the pattern, then repeat it.</p><div class="tiles">'+Array.from({length:9},(_,i)=>'<button class="tile" data-tile="'+i+'" aria-label="Tile '+(i+1)+'"></button>').join('')+'</div><p><button class="pill" id="memStart">Start sequence</button></p></div>';let tiles=[...document.querySelectorAll('[data-tile]')],info=$('#memInfo'),busy=false;tiles.forEach((b,i)=>b.onclick=()=>{if(busy||!seq.length)return;b.classList.add('lit');setTimeout(()=>b.classList.remove('lit'),180);input.push(i);if(input[input.length-1]!==seq[input.length-1]){busy=true;finish('Sequence ended at level '+round+'. Try again!');info.textContent='Not quite — you reached level '+round;return}if(input.length===seq.length){round++;input=[];info.textContent='Great! Level '+round;setTimeout(next,500)}});function next(){if(busy)return;seq.push(Math.floor(Math.random()*9));busy=true;info.textContent='Watch closely…';let i=0;function flash(){if(i>=seq.length){busy=false;info.textContent='Your turn — repeat '+seq.length+' tiles';return}tiles[seq[i]].classList.add('lit');tone(360+seq[i]*35);setTimeout(()=>{tiles[seq[i]].classList.remove('lit');i++;setTimeout(flash,170)},320)}flash()}$('#memStart').onclick=()=>{seq=[];input=[];round=0;busy=false;next()}}
-</script></body></html>
+(function(){
+'use strict';
+
+/* ── CONSTANTS ── */
+const SEED_COUNT   = 4726451;
+const SWIPE_MIN    = 40;       // px
+const COMBO_WINDOW = 3000;     // ms
+const COMBO_THRESH = 3;
+const HINT_MSGS = [
+  "Keep tapping, keep smiling! 😄",
+  "Ekdum mast! 🎉",
+  "Zabardast tapli! 💥",
+  "Kya baat hai! Keep going!",
+  "Legend ki tapli! 🏆",
+  "Wah wah wah!",
+  "Aur ek! Aur ek!",
+  "Superb! Full stress relief!",
+];
+const WORDS = ["TAPLI!","SLAP!","THWAP!","BOOM!","PAK!","धड़ाम!","झन्नाट!","WHACK!","SMACK!"];
+const WORD_COLORS = ["#d9531e","#e74c3c","#1f4fa3","#8e44ad","#c0392b","#e67e22"];
+
+/* ── STATE ── */
+let localCount  = parseInt(localStorage.getItem('tapliCount') || '0', 10);
+let globalCount = SEED_COUNT + localCount;
+let comboTaplis = [];
+let comboTimer  = null;
+let hintIndex   = 0;
+let coachHidden = localStorage.getItem('coachSeen');
+let audioCtx    = null;
+
+/* ── DOM REFS ── */
+const countEl      = document.getElementById('count');
+const globalCountEl= document.getElementById('globalCount');
+const hintEl       = document.getElementById('hint');
+const manWrap      = document.getElementById('manWrap');
+const stageEl      = document.getElementById('stage');
+const flashEl      = document.getElementById('flash');
+const comboEl      = document.getElementById('combo');
+const toastEl      = document.getElementById('toast');
+const fxCanvas     = document.getElementById('fx');
+const coachEl      = document.getElementById('coach');
+const shareWaBtn   = document.getElementById('shareWa');
+const shareCopyBtn = document.getElementById('shareCopy');
+
+/* ── INIT ── */
+function init() {
+  resizeFx();
+  updateCountDisplay(false);
+  if (coachHidden) hideCoach();
+  rotateHint();
+  setInterval(rotateHint, 4000);
+
+  // Swipe detection
+  let startX = 0, startY = 0, startTime = 0, tracking = false;
+
+  function onStart(e) {
+    const pt = e.touches ? e.touches[0] : e;
+    startX    = pt.clientX;
+    startY    = pt.clientY;
+    startTime = Date.now();
+    tracking  = true;
+  }
+
+  function onEnd(e) {
+    if (!tracking) return;
+    tracking = false;
+    const pt = e.changedTouches ? e.changedTouches[0] : e;
+    const dx = pt.clientX - startX;
+    const dy = pt.clientY - startY;
+    const dt = Date.now() - startTime;
+    if (dx < -SWIPE_MIN && Math.abs(dy) < Math.abs(dx) * 1.2 && dt < 800) {
+      const hitX = startX + dx * 0.5;
+      const hitY = startY + dy * 0.5;
+      doTapli(hitX, hitY);
+    }
+  }
+
+  stageEl.addEventListener('touchstart', onStart, {passive:true});
+  stageEl.addEventListener('touchend',   onEnd,   {passive:true});
+  stageEl.addEventListener('mousedown',  onStart);
+  stageEl.addEventListener('mouseup',    onEnd);
+
+  shareWaBtn.addEventListener('click',  shareWhatsApp);
+  shareCopyBtn.addEventListener('click', copyLink);
+
+  window.addEventListener('resize', resizeFx);
+}
+
+/* ── CORE TAPLI ACTION ── */
+function doTapli(hitX, hitY) {
+  localCount++;
+  globalCount = SEED_COUNT + localCount;
+  localStorage.setItem('tapliCount', localCount);
+
+  if (!coachHidden) {
+    coachHidden = true;
+    localStorage.setItem('coachSeen', '1');
+    hideCoach();
+  }
+
+  triggerManHit();
+  flashScreen();
+  playSlap();
+  spawnBurst(hitX, hitY);
+  spawnFloater(hitX, hitY - 30);
+  updateCountDisplay(true);
+  handleCombo();
+
+  if (localCount % 5 === 0) advanceHint();
+}
+
+/* ── MAN ANIMATION ── */
+function triggerManHit() {
+  manWrap.classList.remove('breathe','hit');
+  void manWrap.offsetWidth;
+  manWrap.classList.add('hit');
+  manWrap.addEventListener('animationend', () => {
+    manWrap.classList.remove('hit');
+    manWrap.classList.add('breathe');
+  }, {once: true});
+}
+
+/* ── COACH ── */
+function hideCoach() {
+  coachEl.classList.add('hide');
+  setTimeout(()=>{ coachEl.style.display='none'; }, 500);
+}
+
+/* ── FLASH ── */
+function flashScreen() {
+  flashEl.classList.remove('bang');
+  void flashEl.offsetWidth;
+  flashEl.classList.add('bang');
+  setTimeout(()=> flashEl.classList.remove('bang'), 80);
+}
+
+/* ── COUNTER DISPLAY ── */
+function updateCountDisplay(animate) {
+  countEl.textContent = localCount.toLocaleString();
+  globalCountEl.textContent = globalCount.toLocaleString();
+  if (animate) {
+    countEl.classList.remove('pop');
+    void countEl.offsetWidth;
+    countEl.classList.add('pop');
+  }
+}
+
+/* ── WORD BURST ── */
+function spawnBurst(x, y) {
+  const word  = WORDS[Math.floor(Math.random() * WORDS.length)];
+  const color = WORD_COLORS[Math.floor(Math.random() * WORD_COLORS.length)];
+  const el    = document.createElement('div');
+  el.className = 'burst';
+  el.textContent = word;
+  el.style.cssText = `left:${x}px;top:${y - 20}px;color:${color};transform-origin:center center;`;
+  document.body.appendChild(el);
+  el.addEventListener('animationend', ()=> el.remove(), {once:true});
+}
+
+/* ── +1 FLOATER ── */
+function spawnFloater(x, y) {
+  const el = document.createElement('div');
+  el.className = 'floater';
+  el.textContent = '+1';
+  el.style.cssText = `left:${x + 10}px;top:${y}px;`;
+  document.body.appendChild(el);
+  el.addEventListener('animationend', ()=> el.remove(), {once:true});
+}
+
+/* ── COMBO ── */
+function handleCombo() {
+  const now = Date.now();
+  comboTaplis.push(now);
+  comboTaplis = comboTaplis.filter(t => now - t < COMBO_WINDOW);
+
+  if (comboTaplis.length >= COMBO_THRESH) {
+    comboEl.textContent = `🔥 ${comboTaplis.length}x COMBO!`;
+    comboEl.classList.add('show');
+    if (comboTaplis.length % 5 === 0) playComboSound();
+    clearTimeout(comboTimer);
+    comboTimer = setTimeout(()=>{
+      comboEl.classList.remove('show');
+      comboTaplis = [];
+    }, 1500);
+  }
+}
+
+/* ── HINT ROTATION ── */
+function rotateHint() {
+  hintEl.style.opacity = '0';
+  setTimeout(()=>{
+    hintEl.textContent = HINT_MSGS[hintIndex % HINT_MSGS.length];
+    hintEl.style.opacity = '1';
+  }, 250);
+}
+function advanceHint() {
+  hintIndex = (hintIndex + 1) % HINT_MSGS.length;
+  rotateHint();
+}
+
+/* ── WEB AUDIO ── */
+function getAudioCtx() {
+  if (!audioCtx) {
+    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e){}
+  }
+  if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+
+function playSlap() {
+  const ac = getAudioCtx();
+  if (!ac) return;
+  const buf = ac.createBuffer(1, ac.sampleRate * 0.12, ac.sampleRate);
+  const data = buf.getChannelData(0);
+  for (let i = 0; i < data.length; i++) {
+    data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / data.length, 5);
+  }
+  const src = ac.createBufferSource();
+  src.buffer = buf;
+  const filter = ac.createBiquadFilter();
+  filter.type = 'lowpass';
+  filter.frequency.value = 2200;
+  const gain = ac.createGain();
+  gain.gain.setValueAtTime(1.8, ac.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.1);
+  src.connect(filter);
+  filter.connect(gain);
+  gain.connect(ac.destination);
+  src.start();
+}
+
+function playComboSound() {
+  const ac = getAudioCtx();
+  if (!ac) return;
+  [523, 659, 784, 1047].forEach((freq, i) => {
+    const osc  = ac.createOscillator();
+    const gain = ac.createGain();
+    osc.type = 'sine';
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0, ac.currentTime + i * 0.07);
+    gain.gain.linearRampToValueAtTime(0.3, ac.currentTime + i * 0.07 + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + i * 0.07 + 0.15);
+    osc.connect(gain);
+    gain.connect(ac.destination);
+    osc.start(ac.currentTime + i * 0.07);
+    osc.stop(ac.currentTime + i * 0.07 + 0.2);
+  });
+}
+
+/* ── SHARE ── */
+function shareWhatsApp() {
+  const text = `I gave ${localCount.toLocaleString()} taplis on Digital Tapli! 👋\nCan you beat my score?\n${location.href}`;
+  if (navigator.share) {
+    navigator.share({ title: 'Digital Tapli', text, url: location.href }).catch(()=>{});
+  } else {
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+  }
+}
+
+function copyLink() {
+  navigator.clipboard.writeText(location.href).then(()=>{
+    showToast('Link copied! 🎉');
+  }).catch(()=>{
+    const ta = document.createElement('textarea');
+    ta.value = location.href;
+    ta.style.cssText = 'position:fixed;opacity:0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
+    showToast('Link copied! 🎉');
+  });
+}
+
+function showToast(msg) {
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  clearTimeout(toastEl._t);
+  toastEl._t = setTimeout(()=> toastEl.classList.remove('show'), 2200);
+}
+
+function resizeFx() {
+  fxCanvas.width  = window.innerWidth;
+  fxCanvas.height = window.innerHeight;
+}
+
+hintEl.style.transition = 'opacity .25s';
+
+init();
+
+/* ── SERVICE WORKER REGISTRATION (PWA) ── */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
+})();
+</script>
+</body>
+</html>
