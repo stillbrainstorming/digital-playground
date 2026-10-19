@@ -45,11 +45,15 @@ html,body{margin:0;height:100%;background:#fff;overflow:hidden;overscroll-behavi
 @keyframes ringPulse{0%{transform:scale(1);opacity:1}70%{transform:scale(2);opacity:0}100%{transform:scale(2);opacity:0}}
 
 /* man wrapper */
-#manWrap{position:relative;width:min(60vw,240px);height:min(70vw,310px);transition:transform .08s cubic-bezier(.2,1.6,.4,1);transform-origin:bottom center}
-#manWrap.hit{animation:manHit .25s cubic-bezier(.2,1.6,.4,1)}
+#manWrap{position:relative;width:min(60vw,240px);height:min(70vw,310px);transition:transform .08s cubic-bezier(.2,1.6,.4,1);transform-origin:bottom center;pointer-events:none}
 #manWrap.breathe{animation:breathe 3s ease-in-out infinite}
+#manWrap.hit-left{animation:manHitLeft .3s cubic-bezier(.2,1.6,.4,1)}
+#manWrap.hit-right{animation:manHitRight .3s cubic-bezier(.2,1.6,.4,1)}
+#manWrap.hit-center{animation:manHitCenter .3s cubic-bezier(.2,1.6,.4,1)}
 @keyframes breathe{0%,100%{transform:scaleY(1) scaleX(1)}50%{transform:scaleY(1.018) scaleX(.985)}}
-@keyframes manHit{0%{transform:rotate(0deg) scaleX(1)}20%{transform:rotate(-8deg) scaleX(.9) translateX(-6px)}60%{transform:rotate(4deg) scaleX(1.05)}100%{transform:rotate(0deg) scaleX(1)}}
+@keyframes manHitLeft{0%{transform:rotate(0deg) scaleX(1)}25%{transform:rotate(-14deg) scaleX(.88) translateX(-18px)}65%{transform:rotate(6deg) scaleX(1.05) translateX(4px)}100%{transform:rotate(0deg) scaleX(1)}}
+@keyframes manHitRight{0%{transform:rotate(0deg) scaleX(1)}25%{transform:rotate(14deg) scaleX(.88) translateX(18px)}65%{transform:rotate(-6deg) scaleX(1.05) translateX(-4px)}100%{transform:rotate(0deg) scaleX(1)}}
+@keyframes manHitCenter{0%{transform:scale(1)}30%{transform:scale(.92) translateY(10px) rotate(-2deg)}70%{transform:scale(1.06) translateY(-4px) rotate(2deg)}100%{transform:scale(1)}}
 
 /* ── COUNTERS ── */
 #counter{padding:6px 12px 8px;font:700 clamp(17px,4.5vw,26px) system-ui,-apple-system,sans-serif;color:#333;text-align:center}
@@ -96,7 +100,7 @@ html,body{margin:0;height:100%;background:#fff;overflow:hidden;overscroll-behavi
 <div id="app">
   <nav id="appTabs" aria-label="Switch app">
     <span class="tab on" aria-current="page">Digital Tapli</span>
-    <a class="tab go" href="https://digitiranga.com" target="_blank" rel="noopener">Digi Tiranga</a>
+    <a class="tab go" href="https://stillbrainstorming.github.io/tricolor-digital-experience/" target="_blank" rel="noopener">Digi Tiranga</a>
   </nav>
 
   <h1 id="title">Digital Tapli</h1>
@@ -106,7 +110,7 @@ html,body{margin:0;height:100%;background:#fff;overflow:hidden;overscroll-behavi
     <!-- Coach / first-use hint -->
     <div id="coach" aria-hidden="true">
       <span class="ring"></span>
-      <span class="lab">← Swipe left to give taplis</span>
+      <span class="lab">👋 Swipe or tap to give taplis</span>
     </div>
 
     <!-- Cartoon Boss character SVG -->
@@ -277,35 +281,60 @@ function init() {
   rotateHint();
   setInterval(rotateHint, 4000);
 
-  // Swipe detection
-  let startX = 0, startY = 0, startTime = 0, tracking = false;
+  // Modern pointer swipe & tap detection
+  const MIN_DIST = 28;
+  const MIN_SPEED = 0.18;
+  let start = null;
 
-  function onStart(e) {
-    const pt = e.touches ? e.touches[0] : e;
-    startX    = pt.clientX;
-    startY    = pt.clientY;
-    startTime = Date.now();
-    tracking  = true;
+  function onPointerDown(e) {
+    if (e.target.closest && e.target.closest('#share, #appTabs, a, button')) return;
+    getAudioCtx();
+    if (!coachHidden) hideCoach();
+    start = { x: e.clientX, y: e.clientY, t: performance.now() };
+    if (e.cancelable) e.preventDefault();
   }
 
-  function onEnd(e) {
-    if (!tracking) return;
-    tracking = false;
-    const pt = e.changedTouches ? e.changedTouches[0] : e;
-    const dx = pt.clientX - startX;
-    const dy = pt.clientY - startY;
-    const dt = Date.now() - startTime;
-    if (dx < -SWIPE_MIN && Math.abs(dy) < Math.abs(dx) * 1.2 && dt < 800) {
-      const hitX = startX + dx * 0.5;
-      const hitY = startY + dy * 0.5;
-      doTapli(hitX, hitY);
+  function onPointerMove(e) {
+    if (!start) return;
+    const dx = e.clientX - start.x;
+    const dy = e.clientY - start.y;
+    const dt = Math.max(1, performance.now() - start.t);
+    const dist = Math.hypot(dx, dy);
+    const speed = dist / dt;
+
+    if (dist >= MIN_DIST && (speed >= MIN_SPEED || dist >= 55)) {
+      doTapli(e.clientX, e.clientY, dx, dy, speed);
+      // Reset start to current position to allow continuous sweeping slaps
+      start = { x: e.clientX, y: e.clientY, t: performance.now() };
+    } else if (dt > 260) {
+      // Reset baseline if drag is too slow so a subsequent flick lands
+      start = { x: e.clientX, y: e.clientY, t: performance.now() };
     }
   }
 
-  stageEl.addEventListener('touchstart', onStart, {passive:true});
-  stageEl.addEventListener('touchend',   onEnd,   {passive:true});
-  stageEl.addEventListener('mousedown',  onStart);
-  stageEl.addEventListener('mouseup',    onEnd);
+  function onPointerUp(e) {
+    if (!start) return;
+    const dx = e.clientX - start.x;
+    const dy = e.clientY - start.y;
+    const dt = Math.max(1, performance.now() - start.t);
+    const dist = Math.hypot(dx, dy);
+
+    // If it was a quick tap/click on stage or character
+    if (dist < 22 && dt < 400) {
+      doTapli(e.clientX, e.clientY, 0, 0, 1.0);
+    }
+    start = null;
+  }
+
+  function onPointerCancel() {
+    start = null;
+  }
+
+  window.addEventListener('pointerdown', onPointerDown, { passive: false });
+  window.addEventListener('pointermove', onPointerMove, { passive: true });
+  window.addEventListener('pointerup', onPointerUp, { passive: true });
+  window.addEventListener('pointercancel', onPointerCancel, { passive: true });
+  window.addEventListener('contextmenu', e => e.preventDefault());
 
   shareWaBtn.addEventListener('click',  shareWhatsApp);
   shareCopyBtn.addEventListener('click', copyLink);
@@ -314,7 +343,20 @@ function init() {
 }
 
 /* ── CORE TAPLI ACTION ── */
-function doTapli(hitX, hitY) {
+let hitTimer = null;
+function triggerManHit(dx = 0) {
+  manWrap.classList.remove('breathe', 'hit-left', 'hit-right', 'hit-center');
+  void manWrap.offsetWidth;
+  const cls = dx < -12 ? 'hit-left' : dx > 12 ? 'hit-right' : 'hit-center';
+  manWrap.classList.add(cls);
+  clearTimeout(hitTimer);
+  hitTimer = setTimeout(() => {
+    manWrap.classList.remove('hit-left', 'hit-right', 'hit-center');
+    manWrap.classList.add('breathe');
+  }, 320);
+}
+
+function doTapli(hitX, hitY, dx = -1, dy = 0, speed = 1.0) {
   localCount++;
   globalCount = SEED_COUNT + localCount;
   localStorage.setItem('tapliCount', localCount);
@@ -325,32 +367,26 @@ function doTapli(hitX, hitY) {
     hideCoach();
   }
 
-  triggerManHit();
+  triggerManHit(dx);
   flashScreen();
-  playSlap();
-  spawnBurst(hitX, hitY);
-  spawnFloater(hitX, hitY - 30);
+  playSlap(speed);
+  if (navigator.vibrate) try { navigator.vibrate(28); } catch(e){}
+
+  const hx = hitX || (window.innerWidth / 2);
+  const hy = hitY || (window.innerHeight * 0.45);
+  spawnBurst(hx, hy);
+  spawnFloater(hx, hy - 30);
+  drawSpark(hx, hy);
   updateCountDisplay(true);
   handleCombo();
 
   if (localCount % 5 === 0) advanceHint();
 }
 
-/* ── MAN ANIMATION ── */
-function triggerManHit() {
-  manWrap.classList.remove('breathe','hit');
-  void manWrap.offsetWidth;
-  manWrap.classList.add('hit');
-  manWrap.addEventListener('animationend', () => {
-    manWrap.classList.remove('hit');
-    manWrap.classList.add('breathe');
-  }, {once: true});
-}
-
 /* ── COACH ── */
 function hideCoach() {
   coachEl.classList.add('hide');
-  setTimeout(()=>{ coachEl.style.display='none'; }, 500);
+  setTimeout(()=>{ coachEl.style.display='none'; }, 400);
 }
 
 /* ── FLASH ── */
@@ -434,22 +470,61 @@ function getAudioCtx() {
   return audioCtx;
 }
 
-function playSlap() {
+function drawSpark(x, y) {
+  const ctx = fxCanvas.getContext('2d');
+  if (!ctx) return;
+  const sparks = Array.from({length: 12}, () => ({
+    x, y,
+    vx: (Math.random() - 0.5) * 14,
+    vy: (Math.random() - 0.5) * 14 - 3,
+    size: Math.random() * 3 + 2,
+    color: ['#ffd700', '#ff5722', '#ff9800', '#ffffff', '#e91e63'][Math.floor(Math.random() * 5)],
+    life: 1.0
+  }));
+  let lastT = performance.now();
+  function anim(now) {
+    const dt = Math.min((now - lastT) / 1000, 0.05);
+    lastT = now;
+    ctx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
+    let alive = false;
+    for (const s of sparks) {
+      s.x += s.vx;
+      s.y += s.vy;
+      s.vy += 0.4;
+      s.life -= 0.055;
+      if (s.life > 0) {
+        alive = true;
+        ctx.fillStyle = s.color;
+        ctx.globalAlpha = Math.max(0, s.life);
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+    ctx.globalAlpha = 1.0;
+    if (alive) requestAnimationFrame(anim);
+  }
+  requestAnimationFrame(anim);
+}
+
+function playSlap(speed = 1.0) {
   const ac = getAudioCtx();
   if (!ac) return;
-  const buf = ac.createBuffer(1, ac.sampleRate * 0.12, ac.sampleRate);
+  const dur = 0.11;
+  const buf = ac.createBuffer(1, Math.floor(ac.sampleRate * dur), ac.sampleRate);
   const data = buf.getChannelData(0);
   for (let i = 0; i < data.length; i++) {
-    data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / data.length, 5);
+    data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / data.length, 4.5);
   }
   const src = ac.createBufferSource();
   src.buffer = buf;
   const filter = ac.createBiquadFilter();
   filter.type = 'lowpass';
-  filter.frequency.value = 2200;
+  filter.frequency.value = Math.min(3600, 1800 + Math.random() * 800 + (speed || 1) * 300);
   const gain = ac.createGain();
-  gain.gain.setValueAtTime(1.8, ac.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.1);
+  const vol = Math.min(2.5, 1.6 + (speed ? Math.min(0.8, speed * 0.3) : 0));
+  gain.gain.setValueAtTime(vol, ac.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + dur);
   src.connect(filter);
   filter.connect(gain);
   gain.connect(ac.destination);
