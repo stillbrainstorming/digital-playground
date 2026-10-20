@@ -38,7 +38,7 @@ html,body{margin:0;height:100%;background:#fff;overflow:hidden;overscroll-behavi
 #stage{position:relative;flex:1;min-height:0;width:100%;max-width:480px;display:flex;align-items:center;justify-content:center;overflow:hidden}
 
 /* coach ring */
-#coach{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;pointer-events:none;z-index:5;opacity:1;transition:opacity .4s}
+#coach{position:relative;flex:0 0 88px;width:100%;max-width:480px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;pointer-events:none;z-index:5;opacity:1;transition:opacity .4s}
 #coach.hide{opacity:0}
 .ring{display:block;width:72px;height:72px;border-radius:50%;border:3px solid rgba(31,79,163,.5);animation:ringPulse 1.5s ease-out infinite}
 .lab{font:600 14px/1 system-ui,sans-serif;color:#1f4fa3;letter-spacing:.3px}
@@ -105,12 +105,11 @@ html,body{margin:0;height:100%;background:#fff;overflow:hidden;overscroll-behavi
 
   <h1 id="title">Digital Tapli</h1>
   <div id="hint">Keep tapping, keep smiling! 😄</div>
-    <div id="coach" aria-hidden="true">
-      <span class="ring"></span>
-      <span class="lab">👋 Swipe or tap to give taplis</span>
-    </div>
+  <div id="coach" aria-hidden="true">
+    <span class="ring"></span>
+    <span class="lab">👋 Swipe or tap to give taplis</span>
+  </div>
   <div id="stage">
-    <!-- Coach / first-use hint -->
 
     <!-- Cartoon Boss character SVG -->
     <div id="manWrap" class="breathe">
